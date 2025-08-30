@@ -656,34 +656,6 @@ curl -X POST http://localhost:8080/graphql \
 - **Maven**: 3.8+
 - **GraphiQL**: Built-in web interface
 
-## Next Phases Roadmap
-
-### Phase 1: Complete car-service Implementation
-- Full CRUD operations (Create, Read, Update, Delete)
-- Input validation and error handling
-- Service layer with mock data
-- Comprehensive test suite
-
-### Phase 2: Additional Subgraphs + DataLoader
-- Implement engine-service, body-service, tyre-service
-- Add @BatchMapping for N+1 problem resolution
-- Cross-service data fetching
-
-### Phase 3: Federation Setup
-- Schema registry implementation
-- Apollo Gateway or custom gateway
-- Cross-subgraph entity resolution
-
-### Phase 4: Advanced Features
-- Custom directives implementation
-- Instrumentation for monitoring
-- Error classification and handling
-
-### Phase 5: Production Readiness
-- Security (JWT + Spring Security)
-- Comprehensive testing strategy
-- Observability and monitoring
-
 ## Contributing
 
 ### Code Standards
