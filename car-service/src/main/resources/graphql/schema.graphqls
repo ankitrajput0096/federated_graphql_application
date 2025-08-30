@@ -1,0 +1,24 @@
+"""
+Phase 0 minimal schema to test GraphQL + GraphiQL integration
+"""
+type Query {
+    """Simple health check endpoint"""
+    ping: String!
+
+    """Fetch a car by VIN"""
+    car(vin: ID!): Car
+
+    """List all cars with optional limit"""
+    cars(limit: Int = 10): [Car!]!
+}
+
+"""
+Represents a car in the system
+"""
+type Car {
+    vin: ID!
+    model: String!
+    color: String!
+    year: Int
+    isElectric: Boolean!
+}
