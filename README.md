@@ -150,21 +150,21 @@ The diagram reflects the use of Apollo GraphOS for schema composition and real-t
 +------------------------------------+
 | Clients (Web/Mobile Apps, Tools)   |
 |                                    |
-|  +-------------------+             |
-|  | GraphQL Queries   |             |
-|  | (e.g., curl, Postman)           |
-|  +-------------------+             |
+|  +-----------------------+         |
+|  | GraphQL Queries       |         |
+|  | (e.g., curl, Postman) |         |
+|  +-----------------------+         |
 |            |                       |
 |            v                       |
 +------------|-----------------------+
              v
-+------------------------------------+
-| Edge Layer (AWS API Gateway)       |
-| - HTTPS: api.example.com           |
-| - Rate Limiting, WAF               |
-| - Cognito Auth / API Keys          |
-| - Routes to Router ALB             |
-+------------|-----------------------+
++---------------------------------------------------+
+| Edge Layer (AWS API Gateway)                      |
+| - HTTPS: api.example.com                          |
+| - Rate Limiting, WAF                              |
+| - Cognito Auth / API Keys                         |
+| - Routes to Router ALB (Application Load Balancer)|
++------------|--------------------------------------+
              v
 +----------------------------------------+
 | API Layer (Apollo Router)              |
