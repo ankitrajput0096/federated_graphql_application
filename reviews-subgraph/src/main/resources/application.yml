@@ -1,0 +1,18 @@
+server:
+  port: 8081
+
+spring:
+  graphql:
+    graphiql:
+      enabled: true
+    schema:
+      printer:
+        enabled: true
+logging:
+  level:
+    org.springframework.graphql: DEBUG
+
+management:
+  metrics:
+    enable:
+      system: false

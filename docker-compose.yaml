@@ -1,0 +1,77 @@
+
+services:
+  products:
+    build:
+      context: ./products-subgraph
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - graphql-network
+
+  reviews:
+    build:
+      context: ./reviews-subgraph
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    networks:
+      - graphql-network
+
+  rover:
+    image: ubuntu:20.04
+    command: >
+      bash -c "
+        sleep 30 &&
+        apt-get update &&
+        apt-get install -y curl &&
+        curl -sSL https://rover.apollo.dev/nix/latest | sh &&
+        /root/.rover/bin/rover supergraph compose --config /rover/supergraph.yaml > /rover/supergraph.graphql &&
+        tail -f /dev/null
+      "
+    environment:
+      - APOLLO_ELV2_LICENSE=accept
+    volumes:
+      - ./rover:/rover
+      # Uncomment below if using local schema files
+      - ./products-subgraph/src/main/resources/graphql:/rover/products
+      - ./reviews-subgraph/src/main/resources/graphql:/rover/reviews
+    depends_on:
+      - products
+      - reviews
+    networks:
+      - graphql-network
+
+  router:
+    image: ubuntu:20.04
+    working_dir: /app
+    command: >
+      bash -c "
+        sleep 90 &&
+        apt-get update &&
+        apt-get install -y curl &&
+        curl -sSL https://router.apollo.dev/download/nix/latest | sh &&
+        ./router --supergraph /rover/supergraph.graphql --config /rover/router.yaml 2> /rover/router.log
+      "
+    environment:
+      - APOLLO_ELV2_LICENSE=accept
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./rover:/rover
+    depends_on:
+      - rover
+      - products
+      - reviews
+    networks:
+      - graphql-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000/graphql"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+networks:
+  graphql-network:
+    driver: bridge
