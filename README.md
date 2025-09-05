@@ -243,7 +243,7 @@ The diagram reflects the use of Apollo GraphOS for schema composition and real-t
 
 ### 1. Clone the Repository
 ```bash
-git clone <repository-url>
+git clone https://github.com/ankitrajput0096/simple_federated_graphql_application
 cd federation-jvm-spring-example
 ```
 
